@@ -13,7 +13,992 @@
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap"
         rel="stylesheet">
 
-    <link rel="stylesheet" href="admin.css">
+    <style>/* ============================================================
+   ADMIN DASHBOARD — CSS
+   Sumiksha Portfolio Admin Panel
+   ============================================================ */
+
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap');
+
+*,
+*::before,
+*::after {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+:root {
+    --bg-main: #0a0f1e;
+    --bg-card: #111827;
+    --bg-sidebar: #0d1424;
+    --bg-form: #141e33;
+    --accent: #6366f1;
+    --accent-hover: #4f52e0;
+    --accent-glow: rgba(99, 102, 241, .25);
+    --success: #22c55e;
+    --danger: #ef4444;
+    --danger-hover: #c53030;
+    --warning: #f59e0b;
+    --text-main: #e2e8f0;
+    --text-muted: #8492a6;
+    --text-dim: #4a5568;
+    --border: rgba(255, 255, 255, .07);
+    --border-active: rgba(99, 102, 241, .4);
+    --radius: 14px;
+    --radius-sm: 8px;
+    --shadow: 0 4px 24px rgba(0, 0, 0, .45);
+    --sidebar-w: 260px;
+    --topbar-h: 64px;
+    --transition: .22s cubic-bezier(.4, 0, .2, 1);
+}
+
+html,
+body {
+    height: 100%;
+    font-family: 'Inter', sans-serif;
+    background: var(--bg-main);
+    color: var(--text-main);
+    -webkit-font-smoothing: antialiased;
+}
+
+/* ---- SCROLLBAR ---- */
+::-webkit-scrollbar {
+    width: 6px;
+}
+
+::-webkit-scrollbar-track {
+    background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+    background: rgba(255, 255, 255, .12);
+    border-radius: 99px;
+}
+
+/* ============================================================
+   LOGIN SCREEN
+   ============================================================ */
+#login-screen {
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: radial-gradient(ellipse 80% 60% at 50% -10%, rgba(99, 102, 241, .18) 0%, transparent 70%), var(--bg-main);
+    padding: 20px;
+}
+
+.login-card {
+    width: 100%;
+    max-width: 420px;
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: 20px;
+    padding: 44px 40px 36px;
+    box-shadow: var(--shadow), 0 0 60px rgba(99, 102, 241, .08);
+    animation: fadeSlideUp .5s ease both;
+}
+
+.login-logo {
+    text-align: center;
+    margin-bottom: 36px;
+}
+
+.login-icon-wrap {
+    width: 68px;
+    height: 68px;
+    border-radius: 18px;
+    background: linear-gradient(135deg, #6366f1, #a855f7);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto 16px;
+    font-size: 1.6rem;
+    color: #fff;
+    box-shadow: 0 8px 24px rgba(99, 102, 241, .4);
+}
+
+.login-logo h1 {
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: var(--text-main);
+}
+
+.login-logo p {
+    font-size: .85rem;
+    color: var(--text-muted);
+    margin-top: 4px;
+}
+
+.login-error {
+    background: rgba(239, 68, 68, .12);
+    border: 1px solid rgba(239, 68, 68, .3);
+    color: #fca5a5;
+    border-radius: var(--radius-sm);
+    padding: 10px 14px;
+    font-size: .84rem;
+    margin-bottom: 16px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.btn-login {
+    width: 100%;
+    padding: 13px;
+    border: none;
+    border-radius: var(--radius-sm);
+    background: linear-gradient(135deg, #6366f1, #a855f7);
+    color: #fff;
+    font-size: 1rem;
+    font-weight: 600;
+    cursor: pointer;
+    letter-spacing: .3px;
+    transition: var(--transition);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    box-shadow: 0 4px 16px rgba(99, 102, 241, .35);
+    margin-top: 8px;
+}
+
+.btn-login:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 24px rgba(99, 102, 241, .45);
+}
+
+.login-hint {
+    text-align: center;
+    font-size: .78rem;
+    color: var(--text-dim);
+    margin-top: 20px;
+}
+
+/* ============================================================
+   DASHBOARD LAYOUT
+   ============================================================ */
+#dashboard {
+    display: flex;
+    height: 100vh;
+    overflow: hidden;
+}
+
+/* ---- SIDEBAR ---- */
+.sidebar {
+    width: var(--sidebar-w);
+    background: var(--bg-sidebar);
+    border-right: 1px solid var(--border);
+    display: flex;
+    flex-direction: column;
+    flex-shrink: 0;
+    transition: transform var(--transition), width var(--transition);
+    z-index: 200;
+}
+
+.sidebar-brand {
+    padding: 24px 20px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    border-bottom: 1px solid var(--border);
+}
+
+.brand-icon {
+    width: 40px;
+    height: 40px;
+    border-radius: 10px;
+    background: linear-gradient(135deg, #6366f1, #a855f7);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.1rem;
+    font-weight: 800;
+    color: #fff;
+    flex-shrink: 0;
+}
+
+.brand-name {
+    font-size: .95rem;
+    font-weight: 700;
+    color: var(--text-main);
+}
+
+.brand-sub {
+    font-size: .72rem;
+    color: var(--text-muted);
+}
+
+.sidebar-nav {
+    flex: 1;
+    padding: 16px 12px;
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+
+.nav-item {
+    width: 100%;
+    padding: 11px 14px;
+    border: none;
+    border-radius: var(--radius-sm);
+    background: transparent;
+    color: var(--text-muted);
+    font-family: 'Inter', sans-serif;
+    font-size: .9rem;
+    font-weight: 500;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    transition: var(--transition);
+    text-align: left;
+}
+
+.nav-item i {
+    font-size: 1rem;
+    width: 18px;
+    text-align: center;
+}
+
+.nav-item:hover {
+    background: rgba(255, 255, 255, .05);
+    color: var(--text-main);
+}
+
+.nav-item.active {
+    background: var(--accent-glow);
+    color: #818cf8;
+    border: 1px solid var(--border-active);
+}
+
+.sidebar-footer {
+    padding: 16px 12px;
+    border-top: 1px solid var(--border);
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.btn-preview {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 10px 14px;
+    border-radius: var(--radius-sm);
+    background: rgba(99, 102, 241, .12);
+    color: #818cf8;
+    text-decoration: none;
+    font-size: .85rem;
+    font-weight: 500;
+    border: 1px solid var(--border-active);
+    transition: var(--transition);
+}
+
+.btn-preview:hover {
+    background: rgba(99, 102, 241, .22);
+}
+
+.btn-logout {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 10px 14px;
+    border-radius: var(--radius-sm);
+    background: transparent;
+    color: var(--text-muted);
+    font-family: 'Inter', sans-serif;
+    font-size: .85rem;
+    font-weight: 500;
+    border: 1px solid var(--border);
+    cursor: pointer;
+    transition: var(--transition);
+    width: 100%;
+}
+
+.btn-logout:hover {
+    background: rgba(239, 68, 68, .1);
+    color: #fca5a5;
+    border-color: rgba(239, 68, 68, .3);
+}
+
+/* ---- MAIN CONTENT ---- */
+.main-content {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+}
+
+/* ---- TOPBAR ---- */
+.topbar {
+    height: var(--topbar-h);
+    background: var(--bg-card);
+    border-bottom: 1px solid var(--border);
+    display: flex;
+    align-items: center;
+    padding: 0 28px;
+    gap: 16px;
+    flex-shrink: 0;
+}
+
+.sidebar-toggle-btn {
+    background: none;
+    border: none;
+    color: var(--text-muted);
+    font-size: 1.1rem;
+    cursor: pointer;
+    padding: 6px;
+    border-radius: 6px;
+    display: none;
+    transition: var(--transition);
+}
+
+.sidebar-toggle-btn:hover {
+    color: var(--text-main);
+    background: rgba(255, 255, 255, .06);
+}
+
+.topbar-title {
+    font-size: 1.05rem;
+    font-weight: 600;
+    color: var(--text-main);
+    flex: 1;
+}
+
+.topbar-right {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.status-dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: var(--success);
+    box-shadow: 0 0 8px var(--success);
+    animation: pulse 2s infinite;
+}
+
+.status-text {
+    font-size: .8rem;
+    color: var(--text-muted);
+}
+
+/* ---- SECTIONS ---- */
+.dashboard-section {
+    display: none;
+    flex-direction: column;
+    gap: 24px;
+    flex: 1;
+    padding: 28px 32px;
+    overflow-y: auto;
+}
+
+.dashboard-section.active {
+    display: flex;
+}
+
+.section-toolbar {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 16px;
+    flex-wrap: wrap;
+}
+
+.section-heading {
+    font-size: 1.3rem;
+    font-weight: 700;
+    color: var(--text-main);
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.section-heading i {
+    color: #818cf8;
+}
+
+.section-desc {
+    font-size: .85rem;
+    color: var(--text-muted);
+    margin-top: 4px;
+}
+
+.btn-add {
+    padding: 10px 20px;
+    border: none;
+    border-radius: var(--radius-sm);
+    background: linear-gradient(135deg, #6366f1, #a855f7);
+    color: #fff;
+    font-family: 'Inter', sans-serif;
+    font-size: .9rem;
+    font-weight: 600;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    transition: var(--transition);
+    white-space: nowrap;
+    box-shadow: 0 4px 14px rgba(99, 102, 241, .3);
+}
+
+.btn-add:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 20px rgba(99, 102, 241, .4);
+}
+
+/* ---- FORM CARD ---- */
+.form-card {
+    background: var(--bg-form);
+    border: 1px solid var(--border-active);
+    border-radius: var(--radius);
+    padding: 28px 28px 24px;
+    animation: fadeSlideUp .3s ease both;
+    box-shadow: 0 0 40px rgba(99, 102, 241, .06);
+}
+
+.form-title {
+    font-size: 1.05rem;
+    font-weight: 700;
+    color: #818cf8;
+    margin-bottom: 22px;
+}
+
+.field-group {
+    display: flex;
+    flex-direction: column;
+    gap: 7px;
+}
+
+.field-group label {
+    font-size: .83rem;
+    font-weight: 600;
+    color: var(--text-muted);
+    display: flex;
+    align-items: center;
+    gap: 6px;
+}
+
+.label-hint {
+    font-weight: 400;
+    font-style: italic;
+    color: var(--text-dim);
+}
+
+.field-group input,
+.field-group select,
+.field-group textarea {
+    background: rgba(255, 255, 255, .04);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-sm);
+    padding: 10px 14px;
+    color: var(--text-main);
+    font-family: 'Inter', sans-serif;
+    font-size: .9rem;
+    transition: var(--transition);
+    outline: none;
+    resize: vertical;
+}
+
+.field-group input:focus,
+.field-group select:focus,
+.field-group textarea:focus {
+    border-color: rgba(99, 102, 241, .6);
+    background: rgba(99, 102, 241, .05);
+    box-shadow: 0 0 0 3px rgba(99, 102, 241, .12);
+}
+
+.field-group select option {
+    background: var(--bg-card);
+}
+
+.form-grid {
+    display: grid;
+    gap: 18px;
+}
+
+.form-grid.two-col {
+    grid-template-columns: 1fr 1fr;
+}
+
+.form-actions {
+    display: flex;
+    gap: 12px;
+    justify-content: flex-end;
+    margin-top: 8px;
+}
+
+.btn-save {
+    padding: 10px 22px;
+    border: none;
+    border-radius: var(--radius-sm);
+    background: linear-gradient(135deg, #6366f1, #a855f7);
+    color: #fff;
+    font-family: 'Inter', sans-serif;
+    font-size: .9rem;
+    font-weight: 600;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    transition: var(--transition);
+    box-shadow: 0 4px 14px rgba(99, 102, 241, .3);
+}
+
+.btn-save:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 8px 20px rgba(99, 102, 241, .4);
+}
+
+.btn-cancel {
+    padding: 10px 18px;
+    border: 1px solid var(--border);
+    border-radius: var(--radius-sm);
+    background: transparent;
+    color: var(--text-muted);
+    font-family: 'Inter', sans-serif;
+    font-size: .9rem;
+    font-weight: 500;
+    cursor: pointer;
+    transition: var(--transition);
+}
+
+.btn-cancel:hover {
+    background: rgba(255, 255, 255, .05);
+    color: var(--text-main);
+}
+
+/* ---- ITEMS LIST ---- */
+.items-list {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.item-card {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 18px 22px;
+    display: flex;
+    align-items: flex-start;
+    gap: 16px;
+    transition: var(--transition);
+    animation: fadeSlideUp .3s ease both;
+}
+
+.item-card:hover {
+    border-color: rgba(255, 255, 255, .13);
+    box-shadow: 0 4px 20px rgba(0, 0, 0, .25);
+}
+
+.item-icon {
+    width: 42px;
+    height: 42px;
+    border-radius: 10px;
+    background: var(--accent-glow);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.1rem;
+    color: #818cf8;
+    flex-shrink: 0;
+    border: 1px solid var(--border-active);
+}
+
+.item-body {
+    flex: 1;
+    min-width: 0;
+}
+
+.item-title {
+    font-size: .97rem;
+    font-weight: 700;
+    color: var(--text-main);
+    margin-bottom: 4px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.item-meta {
+    font-size: .8rem;
+    color: var(--text-muted);
+}
+
+.item-desc {
+    font-size: .83rem;
+    color: var(--text-dim);
+    margin-top: 6px;
+    display: -webkit-box;
+    line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+}
+
+.item-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+    margin-top: 8px;
+}
+
+.item-tag {
+    padding: 2px 10px;
+    border-radius: 99px;
+    background: rgba(99, 102, 241, .15);
+    color: #a5b4fc;
+    font-size: .75rem;
+    font-weight: 500;
+    border: 1px solid rgba(99, 102, 241, .25);
+}
+
+.item-actions {
+    display: flex;
+    gap: 8px;
+    flex-shrink: 0;
+}
+
+.btn-icon {
+    width: 34px;
+    height: 34px;
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    background: transparent;
+    color: var(--text-muted);
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: .85rem;
+    transition: var(--transition);
+}
+
+.btn-icon.edit:hover {
+    background: rgba(99, 102, 241, .15);
+    color: #818cf8;
+    border-color: var(--border-active);
+}
+
+.btn-icon.del:hover {
+    background: rgba(239, 68, 68, .12);
+    color: #fca5a5;
+    border-color: rgba(239, 68, 68, .3);
+}
+
+/* ---- EMPTY STATE ---- */
+.empty-state {
+    text-align: center;
+    padding: 60px 20px;
+    color: var(--text-dim);
+    background: var(--bg-card);
+    border: 1px dashed var(--border);
+    border-radius: var(--radius);
+}
+
+.empty-state i {
+    font-size: 2.5rem;
+    margin-bottom: 16px;
+    opacity: .4;
+    display: block;
+}
+
+.empty-state p {
+    font-size: .9rem;
+}
+
+/* ---- MODAL ---- */
+.modal-overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(0, 0, 0, .65);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 1000;
+    padding: 20px;
+    animation: fadeIn .2s ease;
+}
+
+.modal-box {
+    background: var(--bg-card);
+    border: 1px solid rgba(239, 68, 68, .25);
+    border-radius: var(--radius);
+    padding: 36px 32px;
+    max-width: 400px;
+    width: 100%;
+    text-align: center;
+    box-shadow: var(--shadow);
+    animation: fadeSlideUp .25s ease both;
+}
+
+.modal-icon {
+    font-size: 2.2rem;
+    color: var(--warning);
+    margin-bottom: 14px;
+}
+
+.modal-box h3 {
+    font-size: 1.15rem;
+    font-weight: 700;
+    margin-bottom: 8px;
+}
+
+.modal-box p {
+    font-size: .875rem;
+    color: var(--text-muted);
+    margin-bottom: 24px;
+}
+
+.modal-actions {
+    display: flex;
+    gap: 12px;
+    justify-content: center;
+}
+
+.btn-delete {
+    padding: 10px 22px;
+    border: none;
+    border-radius: var(--radius-sm);
+    background: var(--danger);
+    color: #fff;
+    font-family: 'Inter', sans-serif;
+    font-size: .9rem;
+    font-weight: 600;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    transition: var(--transition);
+}
+
+.btn-delete:hover {
+    background: var(--danger-hover);
+}
+
+/* ---- TOAST ---- */
+.toast {
+    position: fixed;
+    bottom: 28px;
+    right: 28px;
+    background: #1a2540;
+    border: 1px solid rgba(34, 197, 94, .3);
+    color: #4ade80;
+    border-radius: 10px;
+    padding: 12px 20px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-size: .88rem;
+    font-weight: 500;
+    z-index: 9999;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, .35);
+    animation: slideInRight .3s ease;
+}
+
+/* ============================================================
+   ANIMATIONS
+   ============================================================ */
+@keyframes fadeSlideUp {
+    from {
+        opacity: 0;
+        transform: translateY(12px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+
+    to {
+        opacity: 1;
+    }
+}
+
+@keyframes slideInRight {
+    from {
+        opacity: 0;
+        transform: translateX(20px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
+@keyframes pulse {
+
+    0%,
+    100% {
+        opacity: 1;
+    }
+
+    50% {
+        opacity: .4;
+    }
+}
+
+/* ============================================================
+   RESPONSIVE
+   ============================================================ */
+@media (max-width: 900px) {
+    .sidebar {
+        position: fixed;
+        top: 0;
+        left: 0;
+        height: 100%;
+        transform: translateX(-100%);
+    }
+
+    .sidebar.open {
+        transform: translateX(0);
+        box-shadow: 4px 0 30px rgba(0, 0, 0, .5);
+    }
+
+    .sidebar-toggle-btn {
+        display: block;
+    }
+
+    .dashboard-section {
+        padding: 20px 18px;
+    }
+
+    .form-grid.two-col {
+        grid-template-columns: 1fr;
+    }
+
+    .topbar {
+        padding: 0 18px;
+    }
+}
+
+@media (max-width: 540px) {
+    .login-card {
+        padding: 32px 22px;
+    }
+
+    .section-toolbar {
+        flex-direction: column;
+    }
+
+    .btn-add {
+        width: 100%;
+        justify-content: center;
+    }
+
+    .item-card {
+        flex-wrap: wrap;
+    }
+
+    .item-actions {
+        margin-top: 8px;
+    }
+}
+
+/* ============================================================
+   SKILLS FORM EXTRAS
+   ============================================================ */
+.range-wrap {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.range-wrap input[type="range"] {
+    flex: 1;
+    -webkit-appearance: none;
+    appearance: none;
+    height: 6px;
+    background: rgba(255,255,255,.1);
+    border-radius: 99px;
+    outline: none;
+    border: none;
+    padding: 0;
+    cursor: pointer;
+}
+
+.range-wrap input[type="range"]::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    width: 18px; height: 18px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, #6366f1, #a855f7);
+    cursor: pointer;
+    box-shadow: 0 2px 8px rgba(99,102,241,.5);
+    transition: transform .15s ease;
+}
+
+.range-wrap input[type="range"]::-webkit-slider-thumb:hover { transform: scale(1.2); }
+
+.range-val {
+    min-width: 42px;
+    text-align: right;
+    font-size: .9rem;
+    font-weight: 700;
+    color: #818cf8;
+}
+
+.color-wrap {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.color-input {
+    width: 40px !important;
+    height: 38px !important;
+    padding: 2px !important;
+    border-radius: 8px !important;
+    border: 1px solid var(--border) !important;
+    background: transparent !important;
+    cursor: pointer;
+    flex-shrink: 0;
+}
+
+.color-wrap input[type="text"] {
+    flex: 1;
+}
+
+/* Skill item card proficiency bar */
+.skill-bar-wrap {
+    margin-top: 8px;
+    background: rgba(255,255,255,.07);
+    border-radius: 99px;
+    height: 5px;
+    overflow: hidden;
+}
+
+.skill-bar-fill {
+    height: 100%;
+    border-radius: 99px;
+    background: linear-gradient(90deg, #6366f1, #a855f7);
+    transition: width .5s ease;
+}
+
+.skill-cat-badge {
+    display: inline-flex;
+    align-items: center;
+    padding: 2px 10px;
+    border-radius: 99px;
+    font-size: .72rem;
+    font-weight: 600;
+    letter-spacing: .3px;
+    text-transform: uppercase;
+    margin-bottom: 6px;
+}
+.skill-cat-badge.web   { background: rgba(99,102,241,.15); color: #a5b4fc; border: 1px solid rgba(99,102,241,.25); }
+.skill-cat-badge.data  { background: rgba(245,158,11,.12); color: #fcd34d; border: 1px solid rgba(245,158,11,.2); }
+.skill-cat-badge.tools { background: rgba(52,211,153,.12); color: #6ee7b7; border: 1px solid rgba(52,211,153,.2); }
+.skill-cat-badge.soft  { background: rgba(232,121,249,.12); color: #f0abfc; border: 1px solid rgba(232,121,249,.2); }</style>
 </head>
 
 <body>
@@ -485,7 +1470,772 @@
         <span id="toast-msg">Saved successfully!</span>
     </div>
 
-    <script src="admin.js"></script>
+    <script>/* ============================================================
+   ADMIN DASHBOARD — JavaScript Logic
+   Sumiksha Portfolio Admin Panel
+   ============================================================ */
+
+/* ---- CONFIG ---- */
+// Change this password to whatever you want
+const ADMIN_PASSWORD = 'sumiksha2024';
+
+/* ---- STATE ---- */
+let deleteTarget = null; // { type, id }
+
+/* ============================================================
+   BOOT
+   ============================================================ */
+document.addEventListener('DOMContentLoaded', () => {
+    // Check if already logged in
+    if (sessionStorage.getItem('admin_auth') === 'true') {
+        showDashboard();
+    }
+
+    initLogin();
+    initNav();
+    initProjects();
+    initExperience();
+    initCertificates();
+    initSkills();
+    initProfilePhoto();
+    initModal();
+    initSidebarToggle();
+});
+
+/* ============================================================
+   LOGIN
+   ============================================================ */
+function initLogin() {
+    const form = document.getElementById('login-form');
+    const errEl = document.getElementById('login-error');
+    const input = document.getElementById('admin-pass');
+
+    form.addEventListener('submit', e => {
+        e.preventDefault();
+        if (input.value === ADMIN_PASSWORD) {
+            sessionStorage.setItem('admin_auth', 'true');
+            errEl.style.display = 'none';
+            showDashboard();
+        } else {
+            errEl.style.display = 'flex';
+            input.value = '';
+            input.focus();
+            input.classList.add('shake');
+            setTimeout(() => input.classList.remove('shake'), 500);
+        }
+    });
+
+    document.getElementById('logout-btn').addEventListener('click', () => {
+        sessionStorage.removeItem('admin_auth');
+        document.getElementById('dashboard').style.display = 'none';
+        document.getElementById('login-screen').style.display = 'flex';
+        input.value = '';
+        input.focus();
+    });
+}
+
+function showDashboard() {
+    document.getElementById('login-screen').style.display = 'none';
+    document.getElementById('dashboard').style.display = 'flex';
+    renderAllLists();
+}
+
+/* ============================================================
+   SIDEBAR NAVIGATION
+   ============================================================ */
+function initNav() {
+    const navBtns = document.querySelectorAll('.nav-item');
+    const sections = document.querySelectorAll('.dashboard-section');
+    const titleEl = document.getElementById('topbar-title');
+
+    navBtns.forEach(btn => {
+        btn.addEventListener('click', () => {
+            navBtns.forEach(b => b.classList.remove('active'));
+            btn.classList.add('active');
+
+            const target = btn.getAttribute('data-section');
+            titleEl.textContent = btn.querySelector('span').textContent;
+
+            sections.forEach(s => s.classList.remove('active'));
+            document.getElementById('section-' + target).classList.add('active');
+
+            // Close sidebar on mobile
+            if (window.innerWidth < 900) {
+                document.getElementById('sidebar').classList.remove('open');
+            }
+        });
+    });
+}
+
+function initSidebarToggle() {
+    const toggleBtn = document.getElementById('sidebar-toggle');
+    const sidebar = document.getElementById('sidebar');
+    toggleBtn.addEventListener('click', () => sidebar.classList.toggle('open'));
+    // Close on outside click
+    document.addEventListener('click', e => {
+        if (window.innerWidth < 900 && sidebar.classList.contains('open') &&
+            !sidebar.contains(e.target) && !toggleBtn.contains(e.target)) {
+            sidebar.classList.remove('open');
+        }
+    });
+}
+
+/* ============================================================
+   PROJECTS
+   ============================================================ */
+function initProjects() {
+    const addBtn = document.getElementById('add-project-btn');
+    const formCard = document.getElementById('project-form-card');
+    const form = document.getElementById('project-form');
+    const cancelBtn = document.getElementById('cancel-project-btn');
+
+    addBtn.addEventListener('click', () => {
+        resetProjectForm();
+        document.getElementById('project-form-title').textContent = 'New Project';
+        formCard.style.display = 'block';
+        formCard.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+    });
+
+    cancelBtn.addEventListener('click', () => {
+        formCard.style.display = 'none';
+        resetProjectForm();
+    });
+
+    form.addEventListener('submit', e => {
+        e.preventDefault();
+        const editId = document.getElementById('project-edit-id').value;
+        const projects = getProjects();
+
+        const data = {
+            id: editId || uid(),
+            title: document.getElementById('proj-title').value.trim(),
+            category: document.getElementById('proj-category').value,
+            description: document.getElementById('proj-desc').value.trim(),
+            tags: document.getElementById('proj-tags').value.trim(),
+            liveUrl: document.getElementById('proj-live').value.trim(),
+            githubUrl: document.getElementById('proj-github').value.trim(),
+            caseStudyUrl: document.getElementById('proj-casestudy').value.trim(),
+        };
+
+        if (editId) {
+            const idx = projects.findIndex(p => p.id === editId);
+            if (idx > -1) projects[idx] = data;
+        } else {
+            projects.push(data);
+        }
+
+        saveProjects(projects);
+        formCard.style.display = 'none';
+        resetProjectForm();
+        renderProjectsList();
+        showToast(editId ? 'Project updated!' : 'Project added!');
+    });
+
+    renderProjectsList();
+}
+
+function resetProjectForm() {
+    document.getElementById('project-edit-id').value = '';
+    document.getElementById('proj-title').value = '';
+    document.getElementById('proj-category').value = 'web';
+    document.getElementById('proj-desc').value = '';
+    document.getElementById('proj-tags').value = '';
+    document.getElementById('proj-live').value = '';
+    document.getElementById('proj-github').value = '';
+    document.getElementById('proj-casestudy').value = '';
+}
+
+function renderProjectsList() {
+    const projects = getProjects();
+    const list = document.getElementById('projects-list');
+    const emptyEl = document.getElementById('projects-empty');
+    const iconMap = { web: 'fa-laptop-code', data: 'fa-chart-column', other: 'fa-code' };
+
+    if (projects.length === 0) {
+        list.innerHTML = '';
+        emptyEl.style.display = 'block';
+        return;
+    }
+    emptyEl.style.display = 'none';
+
+    list.innerHTML = projects.map((p, i) => `
+        <div class="item-card">
+            <div class="item-icon"><i class="fa-solid ${iconMap[p.category] || 'fa-laptop-code'}"></i></div>
+            <div class="item-body">
+                <div class="item-title">${esc(p.title)}</div>
+                <div class="item-meta">
+                    <span class="item-tag" style="display:inline-flex">${esc(p.category)}</span>
+                    ${p.caseStudyUrl ? `<span class="item-tag" style="display:inline-flex;background:rgba(168,85,247,.15);color:#c084fc;border-color:rgba(168,85,247,.3)"><i class="fa-solid fa-book-open" style="margin-right:4px"></i> Case Study</span>` : ''}
+                </div>
+                <div class="item-desc">${esc(p.description)}</div>
+                ${p.tags ? `<div class="item-tags">${p.tags.split(',').map(t => `<span class="item-tag">${esc(t.trim())}</span>`).join('')}</div>` : ''}
+            </div>
+            <div class="item-actions">
+                <button class="btn-icon edit" title="Edit" onclick="editProject('${p.id}')"><i class="fa-solid fa-pen"></i></button>
+                <button class="btn-icon del"  title="Delete" onclick="deleteItem('project','${p.id}')"><i class="fa-solid fa-trash"></i></button>
+            </div>
+        </div>
+    `).join('');
+}
+
+function editProject(id) {
+    const p = getProjects().find(p => p.id === id);
+    if (!p) return;
+    document.getElementById('project-edit-id').value = id;
+    document.getElementById('proj-title').value = p.title;
+    document.getElementById('proj-category').value = p.category;
+    document.getElementById('proj-desc').value = p.description;
+    document.getElementById('proj-tags').value = p.tags || '';
+    document.getElementById('proj-live').value = p.liveUrl || '';
+    document.getElementById('proj-github').value = p.githubUrl || '';
+    document.getElementById('proj-casestudy').value = p.caseStudyUrl || '';
+
+    document.getElementById('project-form-title').textContent = 'Edit Project';
+    const card = document.getElementById('project-form-card');
+    card.style.display = 'block';
+    card.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+}
+
+function getProjects() { return JSON.parse(localStorage.getItem('portfolio_projects') || '[]'); }
+function saveProjects(data) { localStorage.setItem('portfolio_projects', JSON.stringify(data)); }
+
+/* ============================================================
+   EXPERIENCE
+   ============================================================ */
+function initExperience() {
+    const addBtn = document.getElementById('add-exp-btn');
+    const formCard = document.getElementById('exp-form-card');
+    const form = document.getElementById('exp-form');
+    const cancelBtn = document.getElementById('cancel-exp-btn');
+
+    addBtn.addEventListener('click', () => {
+        resetExpForm();
+        document.getElementById('exp-form-title').textContent = 'New Experience';
+        formCard.style.display = 'block';
+        formCard.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+    });
+
+    cancelBtn.addEventListener('click', () => {
+        formCard.style.display = 'none';
+        resetExpForm();
+    });
+
+    form.addEventListener('submit', e => {
+        e.preventDefault();
+        const editId = document.getElementById('exp-edit-id').value;
+        const list = getExperience();
+
+        const data = {
+            id: editId || uid(),
+            role: document.getElementById('exp-role').value.trim(),
+            company: document.getElementById('exp-company').value.trim(),
+            period: document.getElementById('exp-period').value.trim(),
+            description: document.getElementById('exp-desc').value.trim(),
+        };
+
+        if (editId) {
+            const idx = list.findIndex(e => e.id === editId);
+            if (idx > -1) list[idx] = data;
+        } else {
+            list.push(data);
+        }
+
+        saveExperience(list);
+        formCard.style.display = 'none';
+        resetExpForm();
+        renderExpList();
+        showToast(editId ? 'Experience updated!' : 'Experience added!');
+    });
+
+    renderExpList();
+}
+
+function resetExpForm() {
+    document.getElementById('exp-edit-id').value = '';
+    document.getElementById('exp-role').value = '';
+    document.getElementById('exp-company').value = '';
+    document.getElementById('exp-period').value = '';
+    document.getElementById('exp-desc').value = '';
+}
+
+function renderExpList() {
+    const list = getExperience();
+    const listEl = document.getElementById('experience-list');
+    const emptyEl = document.getElementById('experience-empty');
+
+    if (list.length === 0) { listEl.innerHTML = ''; emptyEl.style.display = 'block'; return; }
+    emptyEl.style.display = 'none';
+
+    listEl.innerHTML = list.map(e => `
+        <div class="item-card">
+            <div class="item-icon"><i class="fa-solid fa-briefcase"></i></div>
+            <div class="item-body">
+                <div class="item-title">${esc(e.role)}</div>
+                <div class="item-meta">${esc(e.company)} &nbsp;·&nbsp; ${esc(e.period)}</div>
+                <div class="item-desc">${esc(e.description)}</div>
+            </div>
+            <div class="item-actions">
+                <button class="btn-icon edit" title="Edit" onclick="editExperience('${e.id}')"><i class="fa-solid fa-pen"></i></button>
+                <button class="btn-icon del"  title="Delete" onclick="deleteItem('experience','${e.id}')"><i class="fa-solid fa-trash"></i></button>
+            </div>
+        </div>
+    `).join('');
+}
+
+function editExperience(id) {
+    const e = getExperience().find(e => e.id === id);
+    if (!e) return;
+    document.getElementById('exp-edit-id').value = id;
+    document.getElementById('exp-role').value = e.role;
+    document.getElementById('exp-company').value = e.company;
+    document.getElementById('exp-period').value = e.period;
+    document.getElementById('exp-desc').value = e.description;
+
+    document.getElementById('exp-form-title').textContent = 'Edit Experience';
+    const card = document.getElementById('exp-form-card');
+    card.style.display = 'block';
+    card.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+}
+
+function getExperience() { return JSON.parse(localStorage.getItem('portfolio_experience') || '[]'); }
+function saveExperience(data) { localStorage.setItem('portfolio_experience', JSON.stringify(data)); }
+
+/* ============================================================
+   CERTIFICATES
+   ============================================================ */
+function initCertificates() {
+    const addBtn = document.getElementById('add-cert-btn');
+    const formCard = document.getElementById('cert-form-card');
+    const form = document.getElementById('cert-form');
+    const cancelBtn = document.getElementById('cancel-cert-btn');
+
+    // File upload -> Data URL conversion
+    const fileInput = document.getElementById('cert-file');
+    if (fileInput) {
+        fileInput.addEventListener('change', e => {
+            const file = e.target.files[0];
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = function (evt) {
+                    document.getElementById('cert-img').value = evt.target.result;
+                };
+                reader.readAsDataURL(file);
+            }
+        });
+    }
+
+    addBtn.addEventListener('click', () => {
+        resetCertForm();
+        document.getElementById('cert-form-title').textContent = 'New Certificate';
+        formCard.style.display = 'block';
+        formCard.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+    });
+
+    cancelBtn.addEventListener('click', () => {
+        formCard.style.display = 'none';
+        resetCertForm();
+    });
+
+    form.addEventListener('submit', e => {
+        e.preventDefault();
+        const editId = document.getElementById('cert-edit-id').value;
+        const list = getCertificates();
+
+        const data = {
+            id: editId || uid(),
+            title: document.getElementById('cert-title').value.trim(),
+            issuer: document.getElementById('cert-issuer').value.trim(),
+            year: document.getElementById('cert-year').value.trim(),
+            verifyUrl: document.getElementById('cert-verify').value.trim(),
+            imgUrl: document.getElementById('cert-img').value.trim(),
+        };
+
+        if (editId) {
+            const idx = list.findIndex(c => c.id === editId);
+            if (idx > -1) list[idx] = data;
+        } else {
+            list.push(data);
+        }
+
+        saveCertificates(list);
+        formCard.style.display = 'none';
+        resetCertForm();
+        renderCertList();
+        showToast(editId ? 'Certificate updated!' : 'Certificate added!');
+    });
+
+    renderCertList();
+}
+
+function resetCertForm() {
+    document.getElementById('cert-edit-id').value = '';
+    document.getElementById('cert-title').value = '';
+    document.getElementById('cert-issuer').value = '';
+    document.getElementById('cert-year').value = '';
+    document.getElementById('cert-verify').value = '';
+    document.getElementById('cert-img').value = '';
+    const fileInput = document.getElementById('cert-file');
+    if (fileInput) fileInput.value = '';
+}
+
+function renderCertList() {
+    const list = getCertificates();
+    const listEl = document.getElementById('certificates-list');
+    const emptyEl = document.getElementById('certificates-empty');
+
+    if (list.length === 0) { listEl.innerHTML = ''; emptyEl.style.display = 'block'; return; }
+    emptyEl.style.display = 'none';
+
+    listEl.innerHTML = list.map(c => `
+        <div class="item-card">
+            ${c.imgUrl ? `<div class="item-icon" style="padding:0;overflow:hidden"><img src="${esc(c.imgUrl)}" style="width:100%;height:100%;object-fit:cover"></div>` : `<div class="item-icon"><i class="fa-solid fa-certificate"></i></div>`}
+            <div class="item-body">
+                <div class="item-title">${esc(c.title)}</div>
+                <div class="item-meta">${esc(c.issuer)}${c.year ? ' &nbsp;·&nbsp; ' + esc(c.year) : ''}</div>
+                ${c.verifyUrl ? `<div class="item-meta" style="margin-top:4px"><a href="${esc(c.verifyUrl)}" target="_blank" style="color:#818cf8;font-size:.8rem">Verify Link <i class="fa-solid fa-arrow-up-right-from-square" style="font-size:.7rem"></i></a></div>` : ''}
+            </div>
+            <div class="item-actions">
+                <button class="btn-icon edit" title="Edit" onclick="editCertificate('${c.id}')"><i class="fa-solid fa-pen"></i></button>
+                <button class="btn-icon del"  title="Delete" onclick="deleteItem('certificate','${c.id}')"><i class="fa-solid fa-trash"></i></button>
+            </div>
+        </div>
+    `).join('');
+}
+
+function editCertificate(id) {
+    const c = getCertificates().find(c => c.id === id);
+    if (!c) return;
+    document.getElementById('cert-edit-id').value = id;
+    document.getElementById('cert-title').value = c.title;
+    document.getElementById('cert-issuer').value = c.issuer;
+    document.getElementById('cert-year').value = c.year || '';
+    document.getElementById('cert-verify').value = c.verifyUrl || '';
+    document.getElementById('cert-img').value = c.imgUrl || '';
+
+    document.getElementById('cert-form-title').textContent = 'Edit Certificate';
+    const card = document.getElementById('cert-form-card');
+    card.style.display = 'block';
+    card.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+}
+
+function getCertificates() { return JSON.parse(localStorage.getItem('portfolio_certificates') || '[]'); }
+function saveCertificates(data) { localStorage.setItem('portfolio_certificates', JSON.stringify(data)); }
+
+/* ============================================================
+   DELETE MODAL
+   ============================================================ */
+function initModal() {
+    document.getElementById('modal-cancel-btn').addEventListener('click', closeModal);
+    document.getElementById('modal-confirm-btn').addEventListener('click', () => {
+        if (!deleteTarget) return;
+        const { type, id } = deleteTarget;
+
+        if (type === 'project') {
+            saveProjects(getProjects().filter(p => p.id !== id));
+            renderProjectsList();
+        } else if (type === 'experience') {
+            saveExperience(getExperience().filter(e => e.id !== id));
+            renderExpList();
+        } else if (type === 'certificate') {
+            saveCertificates(getCertificates().filter(c => c.id !== id));
+            renderCertList();
+        } else if (type === 'skill') {
+            saveSkills(getSkills().filter(s => s.id !== id));
+            renderSkillsList();
+        }
+
+        closeModal();
+        showToast('Item deleted.');
+        deleteTarget = null;
+    });
+}
+
+function deleteItem(type, id) {
+    deleteTarget = { type, id };
+    const modal = document.getElementById('confirm-modal');
+    const text = document.getElementById('confirm-modal-text');
+    text.textContent = `This will permanently remove this ${type} from your portfolio.`;
+    modal.style.display = 'flex';
+}
+
+function closeModal() {
+    document.getElementById('confirm-modal').style.display = 'none';
+    deleteTarget = null;
+}
+
+// Close modal on overlay click
+document.addEventListener('click', e => {
+    if (e.target.id === 'confirm-modal') closeModal();
+});
+
+
+/* ============================================================
+   HELPERS
+   ============================================================ */
+function renderAllLists() {
+    renderProjectsList();
+    renderExpList();
+    renderCertList();
+    renderSkillsList();
+}
+
+function showToast(msg) {
+    const toast = document.getElementById('toast');
+    const msgEl = document.getElementById('toast-msg');
+    msgEl.textContent = msg;
+    toast.style.display = 'flex';
+    setTimeout(() => toast.style.display = 'none', 3000);
+}
+
+function uid() {
+    return Date.now().toString(36) + Math.random().toString(36).slice(2, 7);
+}
+
+function esc(str) {
+    if (!str) return '';
+    return String(str).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
+}
+
+/* ============================================================
+   SKILLS
+   ============================================================ */
+function initSkills() {
+    const addBtn = document.getElementById('add-skill-btn');
+    const formCard = document.getElementById('skill-form-card');
+    const form = document.getElementById('skill-form');
+    const cancelBtn = document.getElementById('cancel-skill-btn');
+    const colorPick = document.getElementById('skill-color');
+    const colorText = document.getElementById('skill-color-text');
+
+    // Sync color picker <-> text input
+    colorPick.addEventListener('input', () => colorText.value = colorPick.value);
+
+    addBtn.addEventListener('click', () => {
+        resetSkillForm();
+        document.getElementById('skill-form-title').textContent = 'New Skill';
+        formCard.style.display = 'block';
+        formCard.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+    });
+
+    cancelBtn.addEventListener('click', () => {
+        formCard.style.display = 'none';
+        resetSkillForm();
+    });
+
+    form.addEventListener('submit', e => {
+        e.preventDefault();
+        const editId = document.getElementById('skill-edit-id').value;
+        const list = getSkills();
+
+        const colorVal = document.getElementById('skill-color').value;
+        const data = {
+            id: editId || uid(),
+            name: document.getElementById('skill-name').value.trim(),
+            category: document.getElementById('skill-category').value,
+            percent: parseInt(document.getElementById('skill-percent').value),
+            color: colorVal,
+            icon: document.getElementById('skill-icon').value.trim(),
+        };
+
+        if (editId) {
+            const idx = list.findIndex(s => s.id === editId);
+            if (idx > -1) list[idx] = data;
+        } else {
+            list.push(data);
+        }
+
+        saveSkills(list);
+        formCard.style.display = 'none';
+        resetSkillForm();
+        renderSkillsList();
+        showToast(editId ? 'Skill updated!' : 'Skill added!');
+    });
+
+    renderSkillsList();
+}
+
+function resetSkillForm() {
+    document.getElementById('skill-edit-id').value = '';
+    document.getElementById('skill-name').value = '';
+    document.getElementById('skill-category').value = 'web';
+    document.getElementById('skill-percent').value = 80;
+    document.getElementById('skill-percent-val').textContent = '80%';
+    document.getElementById('skill-color').value = '#6366f1';
+    document.getElementById('skill-color-text').value = '#6366f1';
+    document.getElementById('skill-icon').value = '';
+}
+
+function renderSkillsList() {
+    const list = getSkills();
+    const listEl = document.getElementById('skills-list');
+    const emptyEl = document.getElementById('skills-empty');
+    if (!listEl) return;
+
+    if (list.length === 0) { listEl.innerHTML = ''; emptyEl.style.display = 'block'; return; }
+    emptyEl.style.display = 'none';
+
+    listEl.innerHTML = list.map(s => `
+        <div class="item-card">
+            <div class="item-icon" style="background:${esc(s.color)}22; border-color:${esc(s.color)}55">
+                <i class="${esc(s.icon || 'fa-solid fa-star')}" style="color:${esc(s.color)}"></i>
+            </div>
+            <div class="item-body">
+                <div class="skill-cat-badge ${esc(s.category)}">${esc(s.category)}</div>
+                <div class="item-title">${esc(s.name)}</div>
+                <div class="skill-bar-wrap">
+                    <div class="skill-bar-fill" style="width:${s.percent}%; background:linear-gradient(90deg,${esc(s.color)},${esc(s.color)}88)"></div>
+                </div>
+                <div class="item-meta" style="margin-top:6px">${s.percent}% proficiency</div>
+            </div>
+            <div class="item-actions">
+                <button class="btn-icon edit" title="Edit" onclick="editSkill('${s.id}')"><i class="fa-solid fa-pen"></i></button>
+                <button class="btn-icon del"  title="Delete" onclick="deleteItem('skill','${s.id}')"><i class="fa-solid fa-trash"></i></button>
+            </div>
+        </div>
+    `).join('');
+}
+
+function editSkill(id) {
+    const s = getSkills().find(s => s.id === id);
+    if (!s) return;
+    document.getElementById('skill-edit-id').value = id;
+    document.getElementById('skill-name').value = s.name;
+    document.getElementById('skill-category').value = s.category;
+    document.getElementById('skill-percent').value = s.percent;
+    document.getElementById('skill-percent-val').textContent = s.percent + '%';
+    document.getElementById('skill-color').value = s.color || '#6366f1';
+    document.getElementById('skill-color-text').value = s.color || '#6366f1';
+    document.getElementById('skill-icon').value = s.icon || '';
+
+    document.getElementById('skill-form-title').textContent = 'Edit Skill';
+    const card = document.getElementById('skill-form-card');
+    card.style.display = 'block';
+    card.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+}
+
+const DEFAULT_SKILLS = [
+    // Web Development
+    { id: 'sk_1', name: 'HTML5', category: 'web', percent: 95, color: '#e34f26', icon: 'fa-brands fa-html5' },
+    { id: 'sk_2', name: 'CSS3', category: 'web', percent: 90, color: '#1572b6', icon: 'fa-brands fa-css3-alt' },
+    { id: 'sk_3', name: 'JavaScript', category: 'web', percent: 85, color: '#f7df1e', icon: 'fa-brands fa-js' },
+    { id: 'sk_4', name: 'PHP', category: 'web', percent: 80, color: '#8892be', icon: 'fa-brands fa-php' },
+    { id: 'sk_5', name: 'Tailwind & Bootstrap', category: 'web', percent: 85, color: '#38bdf8', icon: 'fa-solid fa-wind' },
+    { id: 'sk_6', name: 'SQL & Firebase', category: 'web', percent: 80, color: '#ffca28', icon: 'fa-solid fa-fire' },
+    { id: 'sk_7', name: 'SEO & UI/UX', category: 'web', percent: 90, color: '#a78bfa', icon: 'fa-solid fa-magnifying-glass' },
+
+    // Data Analytics
+    { id: 'sk_8', name: 'Power BI', category: 'data', percent: 90, color: '#f59e0b', icon: 'fa-solid fa-chart-pie' },
+    { id: 'sk_9', name: 'Microsoft Excel', category: 'data', percent: 85, color: '#22c55e', icon: 'fa-solid fa-table' },
+    { id: 'sk_10', name: 'SQL Queries', category: 'data', percent: 80, color: '#60a5fa', icon: 'fa-solid fa-database' },
+    { id: 'sk_11', name: 'Python (Pandas)', category: 'data', percent: 75, color: '#3b82f6', icon: 'fa-brands fa-python' },
+    { id: 'sk_12', name: 'Data Cleaning', category: 'data', percent: 85, color: '#e879f9', icon: 'fa-solid fa-filter' },
+    { id: 'sk_13', name: 'Data Visualization', category: 'data', percent: 80, color: '#fb923c', icon: 'fa-solid fa-chart-area' },
+
+    // Tools
+    { id: 'sk_14', name: 'VS Code', category: 'tools', percent: 90, color: '#007acc', icon: 'fa-solid fa-code' },
+    { id: 'sk_15', name: 'Git & GitHub', category: 'tools', percent: 85, color: '#f05032', icon: 'fa-brands fa-git-alt' },
+    { id: 'sk_16', name: 'MySQL Workbench', category: 'tools', percent: 80, color: '#00758f', icon: 'fa-solid fa-database' },
+    { id: 'sk_17', name: 'Power BI Desktop', category: 'tools', percent: 90, color: '#f59e0b', icon: 'fa-solid fa-chart-pie' },
+    { id: 'sk_18', name: 'Figma & Canva', category: 'tools', percent: 75, color: '#a259ff', icon: 'fa-brands fa-figma' },
+    { id: 'sk_19', name: 'Chrome DevTools', category: 'tools', percent: 85, color: '#4caf50', icon: 'fa-brands fa-chrome' },
+
+    // Soft Skills
+    { id: 'sk_20', name: 'Problem Solving', category: 'soft', percent: 95, color: '#facc15', icon: 'fa-solid fa-lightbulb' },
+    { id: 'sk_21', name: 'Analytical Thinking', category: 'soft', percent: 90, color: '#c084fc', icon: 'fa-solid fa-brain' },
+    { id: 'sk_22', name: 'Communication', category: 'soft', percent: 85, color: '#34d399', icon: 'fa-solid fa-comments' },
+    { id: 'sk_23', name: 'Teamwork', category: 'soft', percent: 90, color: '#60a5fa', icon: 'fa-solid fa-users' },
+    { id: 'sk_24', name: 'Time Management', category: 'soft', percent: 80, color: '#fb923c', icon: 'fa-solid fa-clock' },
+    { id: 'sk_25', name: 'Project Management', category: 'soft', percent: 85, color: '#f472b6', icon: 'fa-solid fa-list-check' }
+];
+
+function getSkills() {
+    const saved = localStorage.getItem('portfolio_skills');
+    if (!saved) {
+        localStorage.setItem('portfolio_skills', JSON.stringify(DEFAULT_SKILLS));
+        return DEFAULT_SKILLS;
+    }
+    return JSON.parse(saved);
+}
+function saveSkills(data) { localStorage.setItem('portfolio_skills', JSON.stringify(data)); }
+
+/* ============================================================
+   PROFILE PHOTO
+   ============================================================ */
+function initProfilePhoto() {
+    const urlInput = document.getElementById('profile-photo-url');
+    const fileInput = document.getElementById('profile-photo-file');
+    const form = document.getElementById('profile-form');
+    const previewImg = document.getElementById('profile-preview-img');
+    const fallback = document.getElementById('profile-preview-fallback');
+    const removeBtn = document.getElementById('remove-profile-photo-btn');
+
+    if (!form) return;
+
+    // Load existing
+    const currentPhoto = localStorage.getItem('portfolio_profile_photo') || '';
+    updateProfilePreview(currentPhoto);
+
+    // URL input live preview
+    urlInput.addEventListener('input', () => {
+        updateProfilePreview(urlInput.value.trim());
+    });
+
+    // File input -> Base64 data URL
+    if (fileInput) {
+        fileInput.addEventListener('change', e => {
+            const file = e.target.files[0];
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = function (evt) {
+                    urlInput.value = evt.target.result;
+                    updateProfilePreview(evt.target.result);
+                };
+                reader.readAsDataURL(file);
+            }
+        });
+    }
+
+    // Remove photo
+    if (removeBtn) {
+        removeBtn.addEventListener('click', () => {
+            urlInput.value = '';
+            if (fileInput) fileInput.value = '';
+            localStorage.removeItem('portfolio_profile_photo');
+            updateProfilePreview('');
+            showToast('Profile photo removed.');
+        });
+    }
+
+    // Form submit
+    form.addEventListener('submit', e => {
+        e.preventDefault();
+        const photoVal = urlInput.value.trim();
+        if (photoVal) {
+            localStorage.setItem('portfolio_profile_photo', photoVal);
+            showToast('Profile photo updated successfully!');
+        } else {
+            localStorage.removeItem('portfolio_profile_photo');
+            showToast('Profile photo cleared.');
+        }
+    });
+
+    function updateProfilePreview(src) {
+        if (src) {
+            urlInput.value = src;
+            previewImg.src = src;
+            previewImg.style.display = 'block';
+            fallback.style.display = 'none';
+        } else {
+            urlInput.value = '';
+            previewImg.src = '';
+            previewImg.style.display = 'none';
+            fallback.style.display = 'block';
+        }
+    }
+}
+
+
+</script>
 </body>
 
 </html>
